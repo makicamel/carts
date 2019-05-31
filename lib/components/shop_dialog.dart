@@ -27,7 +27,7 @@ class _ShopDialogState extends State<ShopDialog> {
               RaisedButton(
                 child: const Text('追加'),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pop(context, _shopName);
                 },
               ),
             ],

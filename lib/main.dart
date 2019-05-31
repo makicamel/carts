@@ -63,11 +63,12 @@ class _ShopListState extends State<ShopList> {
   IconButton _buildAddButton() {
     return IconButton(
       icon: const Icon(Icons.add_box),
-      onPressed: () {
-        showDialog<dynamic>(context: context, builder: (_) => ShopDialog());
-        setState(() {
-          _shopList.add('Shop${_shopList.length + 1}');
-        });
+      onPressed: () async {
+        final shopName = await showDialog<String>(
+          context: context,
+          builder: (_) => ShopDialog(),
+        );
+        setState(() => _shopList.add(shopName));
       },
     );
   }
