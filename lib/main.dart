@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carts/constants.dart';
+import 'package:carts/components/shop_dialog.dart';
 
 void main() => runApp(Carts());
 
@@ -63,6 +64,7 @@ class _ShopListState extends State<ShopList> {
     return IconButton(
       icon: const Icon(Icons.add_box),
       onPressed: () {
+        showDialog<dynamic>(context: context, builder: (_) => ShopDialog());
         setState(() {
           _shopList.add('Shop${_shopList.length + 1}');
         });
