@@ -61,14 +61,20 @@ class _ShopListState extends State<ShopList> {
             opacity: _isFloating(i) ? 0.3 : 1,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              height: 60,
+              height: 64,
               child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    _shopList[i],
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                  ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        _shopList[i],
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -80,7 +86,7 @@ class _ShopListState extends State<ShopList> {
   }
 
   void onLongUpdate(p, {update = false}) {
-    final _calculateIndex = ((p.globalPosition.dy - 100) / 70).round();
+    var _calculateIndex = ((p.globalPosition.dy - 110) / 64).round();
     if (_floatingIndex == _calculateIndex && update) {
       return;
     }
