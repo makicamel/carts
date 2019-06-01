@@ -11,6 +11,7 @@ class Carts extends StatelessWidget {
       title: Constants.appTitle,
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
+        dividerColor: Colors.teal,
       ),
       home: ShopList(),
     );
@@ -23,7 +24,14 @@ class ShopList extends StatefulWidget {
 }
 
 class _ShopListState extends State<ShopList> {
-  List<String> _shopList = [];
+  List<String> _shopList = [
+    '肉のハナマサ',
+    '野菜や',
+    'ドラッグストア',
+    '池袋',
+  ];
+  int _floatingIndex;
+  bool _isFloating(int i) => _floatingIndex == i;
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +41,57 @@ class _ShopListState extends State<ShopList> {
         title: _buildMoreButton(),
         actions: <Widget>[_buildAddButton()],
       ),
-      body: ListView.separated(
-        itemBuilder: (context, index) =>
-            ListTile(title: Text(_shopList[index])),
-        separatorBuilder: (context, _) => Divider(),
-        itemCount: _shopList.length,
+      body: ListView(
+        children: _buildListTile(),
       ),
     );
+  }
+
+  List<Widget> _buildListTile() {
+    var tiles = <Widget>[];
+    for (var i = 0; i < _shopList.length; i++) {
+      tiles.add(
+        GestureDetector(
+          onLongPressStart: (position) {
+            setState(() => _floatingIndex = i);
+          },
+          onLongPressMoveUpdate: (p) => onLongUpdate(p, update: true),
+          onLongPressEnd: onLongUpdate,
+          child: Opacity(
+            opacity: _isFloating(i) ? 0.3 : 1,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              height: 60,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    _shopList[i],
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    return tiles;
+  }
+
+  void onLongUpdate(p, {update = false}) {
+    final _calculateIndex = ((p.globalPosition.dy - 100) / 70).round();
+    if (_floatingIndex == _calculateIndex && update) {
+      return;
+    }
+    final shopName = _shopList[_floatingIndex];
+    print(_calculateIndex);
+    setState(() {
+      _shopList
+        ..removeAt(_floatingIndex)
+        ..insert(_calculateIndex, shopName);
+      _floatingIndex = update ? _calculateIndex : null;
+    });
   }
 
   IconButton _buildUndoButton() {
