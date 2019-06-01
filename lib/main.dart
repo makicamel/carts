@@ -87,6 +87,9 @@ class _ShopListState extends State<ShopList> {
 
   void onLongUpdate(p, {update = false}) {
     var _calculateIndex = ((p.globalPosition.dy - 110) / 64).round();
+    if (_calculateIndex > _shopList.length - 1) {
+      _calculateIndex = _shopList.length - 1;
+    }
     if (_floatingIndex == _calculateIndex && update) {
       return;
     }
