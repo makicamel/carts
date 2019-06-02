@@ -1,3 +1,4 @@
+import 'package:carts/components/shop_card.dart';
 import 'package:flutter/material.dart';
 import 'package:carts/constants.dart';
 import 'package:carts/components/shop_dialog.dart';
@@ -59,25 +60,7 @@ class _ShopListState extends State<ShopList> {
           onLongPressEnd: onLongUpdate,
           child: Opacity(
             opacity: _isFloating(i) ? 0.3 : 1,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              height: 64,
-              child: Card(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        _shopList[i],
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            child: ShopCard(shopName: _shopList[i]),
           ),
         ),
       );
@@ -86,7 +69,8 @@ class _ShopListState extends State<ShopList> {
   }
 
   void onLongUpdate(p, {update = false}) {
-    var _calculateIndex = ((p.globalPosition.dy - 110) / 64).round();
+    var _calculateIndex =
+        ((p.globalPosition.dy - 110) / Constants.shopCardHeight).round();
     if (_calculateIndex > _shopList.length - 1) {
       _calculateIndex = _shopList.length - 1;
     }
