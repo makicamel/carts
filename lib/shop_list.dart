@@ -16,7 +16,9 @@ class _ShopListState extends State<ShopList> {
     '池袋',
   ];
   int _floatingIndex;
+  int _removingIndex;
   bool _isFloating(int i) => _floatingIndex == i;
+  bool _isRemoving(int i) => _removingIndex == i;
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +35,19 @@ class _ShopListState extends State<ShopList> {
   List<Widget> _buildListTile() {
     var tiles = <Widget>[];
     for (var i = 0; i < _shopList.length; i++) {
+      var card = ShopCard(shopName: _shopList[i]);
       tiles.add(
         GestureDetector(
           onLongPressStart: (p) => setState(() => _floatingIndex = i),
           onLongPressMoveUpdate: (p) => onLongUpdate(p, update: true),
           onLongPressEnd: onLongUpdate,
-          child: Opacity(
+          onHorizontalDragStart: (p) {
+            setState(() => _removingIndex = i);
+          },
+          child: AnimatedOpacity(
             opacity: _isFloating(i) ? 0.3 : 1,
-            child: ShopCard(shopName: _shopList[i]),
+            duration: Duration(milliseconds: 100),
+            child: card,
           ),
         ),
       );
