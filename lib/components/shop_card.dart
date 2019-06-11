@@ -1,23 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ShopCard extends StatefulWidget {
+class ShopCard extends StatelessWidget {
   final String shopName;
   final double height;
-  bool deleting;
+  // bool deleting
 
-  ShopCard({@required this.shopName, this.height = 64, this.deleting = false});
-
-  @override
-  _ShopCardState createState() =>
-      _ShopCardState(shopName: shopName, height: height, deleting: deleting);
-}
-
-class _ShopCardState extends State<ShopCard> {
-  final String shopName;
-  final double height;
-  bool deleting;
-
-  _ShopCardState({this.shopName, this.height, this.deleting});
+  const ShopCard({@required this.shopName, this.height = 64});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +25,7 @@ class _ShopCardState extends State<ShopCard> {
                 ),
               ),
             ),
-            deleting ? _buildDeleting() : const Text(''),
+            false ? _buildDeleting() : const Text(''),
           ],
         ),
       ),
