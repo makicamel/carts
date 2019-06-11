@@ -17,13 +17,14 @@ class ShopList extends StatelessWidget {
       body: StreamBuilder(
         stream: shopBloc.shops,
         initialData: shopBloc.shops.value,
-        builder: (context, snapshot) =>
+        builder: (context, AsyncSnapshot<List<Shop>> snapshot) =>
             ListView(children: _buildListTile(shopBloc, snapshot)),
       ),
     );
   }
 
-  List<Widget> _buildListTile(ShopBloc shopBloc, snapshot) {
+  List<Widget> _buildListTile(
+      ShopBloc shopBloc, AsyncSnapshot<List<Shop>> snapshot) {
     var tiles = <Widget>[];
     for (var i = 0; i < snapshot.data.length; i++) {
       tiles.add(
