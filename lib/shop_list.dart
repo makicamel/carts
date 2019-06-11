@@ -1,5 +1,6 @@
 import 'package:carts/bloc/shop_bloc.dart';
 import 'package:carts/bloc/shop_bloc_provider.dart';
+import 'package:carts/models/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:carts/components/shop_card.dart';
 
@@ -27,9 +28,11 @@ class ShopList extends StatelessWidget {
     for (var i = 0; i < snapshot.data.length; i++) {
       tiles.add(
         GestureDetector(
-          onTap: () => shopBloc.change.add(ChangeIndex(snapshot.data[i], i)),
+          onTap: () => shopBloc.change.add(ChangeIndex(index: i)),
+          onLongPressStart: (p) => shopBloc.change
+              .add(ChangeIndex(index: i, state: ShopState.floating)),
           child: AnimatedOpacity(
-            opacity: 1,
+            opacity: snapshot.data[i].isFloating() ? 0.3 : 1,
             duration: Duration(milliseconds: 100),
             child: ShopCard(shopName: snapshot.data[i].name),
           ),

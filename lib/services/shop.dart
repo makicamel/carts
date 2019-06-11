@@ -6,11 +6,19 @@ class ShopService {
 
   List<Shop> get shops => _shops;
 
-  void moveToUp(Shop shop, index) => _moveToUp(shop, index);
+  void float(int index) => _float(index);
 
-  void moveToDown(Shop shop, index) => _moveToDown(shop, index);
+  void moveToUp(int index) => _moveToUp(index);
 
-  void _moveToUp(Shop shop, int index) {
+  void moveToDown(int index) => _moveToDown(index);
+
+  void _float(int index) {
+    for (var i = 0; i < _shops.length; i++) {
+      i == index ? _shops[i].floatOn() : _shops[i].clearState();
+    }
+  }
+
+  void _moveToUp(int index) {
     if (index == 0) {
       return;
     }
@@ -19,7 +27,7 @@ class ShopService {
     return;
   }
 
-  void _moveToDown(Shop shop, int index) {
+  void _moveToDown(int index) {
     if (index == _shops.length - 1) {
       return;
     }
